@@ -1,17 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { SolanaTweeterView } from "../views";
+import { MerchantPayView } from "../views";
 
-const Home: NextPage = (props) => {
+const MerchantPay: NextPage = (props) => {
   return (
     <div>
       <Head>
-        <title>Solana Tweeter!</title>
+        <title>UniPay - Merchant Pay</title>
         <meta name="description" content="This site will fly high 🦤" />
       </Head>
-      <SolanaTweeterView />
+      <MerchantPayView />
     </div>
   );
 };
 
-export default Home;
+export default MerchantPay;

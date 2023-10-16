@@ -1,17 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { GalleryView } from "../views";
+import { MerchantSignupView } from "../views";
 
-const Home: NextPage = (props) => {
+const MerchantSignup: NextPage = (props) => {
   return (
     <div>
       <Head>
-        <title>NFT Gallery!</title>
+        <title>UniPay - Merchant Signup</title>
         <meta name="description" content="This site will fly high 🦤" />
       </Head>
-      <GalleryView />
+      <MerchantSignupView />
     </div>
   );
 };
 
-export default Home;
+export default MerchantSignup;
