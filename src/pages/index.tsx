@@ -6,11 +6,8 @@ const Home: NextPage = (props) => {
   return (
     <div>
       <Head>
-        <title>Caw Caw!</title>
-        <meta
-          name="description"
-          content="This site will fly high 🦤"
-        />
+        <title>UniPay - Home</title>
+        <meta name="description" content="Unified POS & Crypto Bliss ⚡️" />
       </Head>
       <HomeView />
     </div>
