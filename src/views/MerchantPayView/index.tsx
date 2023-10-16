@@ -1,30 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export const MerchantPayView: React.FC = () => {
   const { publicKey } = useWallet();
+  const [paymentStatus, setPaymentStatus] = useState<
+    "awaiting" | "confirming" | "conversion" | "completed"
+  >("awaiting");
+
+  // Simulating the payment flow for demonstration purposes
+  useEffect(() => {
+    switch (paymentStatus) {
+      case "confirming":
+        setTimeout(() => {
+          setPaymentStatus("conversion");
+        }, 2000);
+        break;
+
+      case "conversion":
+        setTimeout(() => {
+          setPaymentStatus("completed");
+        }, 2000);
+        break;
+
+      default:
+        break;
+    }
+  }, [paymentStatus]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-900 to-black relative overflow-hidden">
-      <div className="text-center z-10 space-y-6 md:max-w-3xl">
-        <h1 className="text-5xl font-extrabold text-white mb-2 hover:text-blue-500 transition-all duration-300 cursor-pointer shadow-md transform hover:scale-105">
-          Accept Cryptocurrencies
-        </h1>
-        <p className="text-2xl text-gray-300 hover:text-gray-100 transition-all duration-300 cursor-pointer shadow-md transform hover:scale-105">
-          Empower your business by accepting various cryptocurrencies.
-          Auto-convert with minimal fees. Transfers are instant with Solana
-          integration.
-        </p>
+      {/* Product Name */}
+      <h1 className="text-2xl text-white font-bold mb-4">UniPay | Merchant</h1>
 
-        {publicKey ? (
-          <p className="text-white">Connected as: {publicKey.toBase58()}</p>
-        ) : (
-          <button>
-            <WalletMultiButton className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none shadow-xl transform hover:scale-110 transition-transform duration-300" />
-          </button>
-        )}
-      </div>
+      {/* Payment status display */}
+      {paymentStatus === "awaiting" && (
+        <p className="text-xl text-gray-300">Awaiting payment...</p>
+      )}
+      {paymentStatus === "confirming" && (
+        <p className="text-xl text-blue-500">Payment confirming...</p>
+      )}
+      {paymentStatus === "conversion" && (
+        <>
+          <p className="text-xl text-green-500">
+            USDT converted to your preferred stablecoin: USDC
+          </p>
+          {publicKey && (
+            <p className="text-xl text-gray-300 mt-2">
+              to wallet address: {publicKey.toBase58()}
+            </p>
+          )}
+        </>
+      )}
+      {paymentStatus === "completed" && (
+        <p className="text-xl text-green-600">
+          Payment successfully completed and deposited to wallet!
+        </p>
+      )}
+
+      {/* Button for demo purposes */}
+      {paymentStatus === "awaiting" && (
+        <button
+          onClick={() => setPaymentStatus("confirming")}
+          className="mt-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-all duration-300"
+        >
+          Demo: Initiate Payment Received
+        </button>
+      )}
     </div>
   );
 };
